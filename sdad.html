@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <title>สั่งซื้อสินค้า</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f5f5f5;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 20px auto;
+      background: #ffffff;
+      border-radius: 12px;
+      padding: 20px 20px 30px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+    }
+
+    h1, h2 {
+      margin-top: 0;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 22px;
+    }
+
+    h2 {
+      font-size: 18px;
+      margin-bottom: 16px;
+    }
+
+    .product-image {
+      width: 100%;
+      max-height: 250px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 16px;
+      border: 1px solid #eee;
+      background: #fafafa;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 6px;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    select, input[type="text"], textarea {
+      width: 100%;
+      padding: 8px 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 14px;
+      box-sizing: border-box;
+      margin-bottom: 14px;
+    }
+
+    textarea {
+      resize: vertical;
+      min-height: 80px;
+    }
+
+    .btn-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    button {
+      flex: 1;
+      padding: 10px 14px;
+      font-size: 14px;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #16a34a;
+      color: #fff;
+    }
+
+    .btn-secondary {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .step {
+      display: none;
+    }
+
+    .step.active {
+      display: block;
+    }
+
+    .radio-group {
+      margin-bottom: 12px;
+    }
+
+    .radio-group label {
+      font-weight: 400;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      margin-bottom: 4px;
+      cursor: pointer;
+    }
+
+    .bank-box {
+      border-radius: 8px;
+      padding: 10px 12px;
+      background: #f0fdf4;
+      border: 1px solid #bbf7d0;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .summary-box {
+      margin-top: 16px;
+      padding: 10px 12px;
+      background: #f9fafb;
+      border-radius: 8px;
+      border: 1px solid #e5e7eb;
+      font-size: 14px;
+      white-space: pre-line;
+    }
+
+    .copy-btn, .line-btn {
+      margin-top: 10px;
+      width: 100%;
+    }
+
+    .note {
+      font-size: 12px;
+      color: #6b7280;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+  <h1>สั่งซื้อสินค้า</h1>
+
+  <!-- STEP 1: เลือกสินค้า -->
+  <div id="step1" class="step active">
+    <h2>1. เลือกสินค้า</h2>
+
+    <!-- รูปสินค้า (เปลี่ยน src เป็นรูปของคุณได้เลย) -->
+    <img src="product1.jpg" alt="สินค้า" class="product-image">
+
+    <label for="flavor">เลือกรสชาติ</label>
+    <select id="flavor">
+      <option value="" disabled selected>-- กรุณาเลือกรสชาติ --</option>
+      <option value="ดั้งเดิม">ดั้งเดิม</option>
+      <option value="BBQ">BBQ</option>
+      <option value="เผ็ดมาก">เผ็ดมาก</option>
+      <option value="หมึกย่าง">หมึกย่าง</option>
+      <option value="ต้มยำ">ต้มยำ</option>
+      <option value="กุ้ง">กุ้ง</option>
+    </select>
+
+    <label for="quantity">เลือกจำนวน</label>
+    <select id="quantity">
+      <option value="" disabled selected>-- กรุณาเลือกจำนวน --</option>
+      <option value="50 ห่อ">50 ห่อ (700 บาท)</option>
+      <option value="100 ห่อ">100 ห่อ (1,300 บาท)</option>
+      <option value="200 ห่อ">200 ห่อ (2,550 บาท)</option>
+    </select>
+
+    <div class="btn-row">
+      <button class="btn-primary" onclick="goToStep2()">ถัดไป</button>
+    </div>
+  </div>
+
+  <!-- STEP 2: กรอกที่อยู่และวิธีชำระ -->
+  <div id="step2" class="step">
+    <h2>2. กรอกข้อมูลจัดส่ง</h2>
+
+    <label for="customerName">ชื่อผู้รับ</label>
+    <input type="text" id="customerName" placeholder="เช่น นางสาว น้ำฝน ใจดี">
+
+    <label for="address">ที่อยู่จัดส่ง</label>
+    <textarea id="address" placeholder="บ้านเลขที่ / หมู่บ้าน / ซอย / ถนน / ตำบล / อำเภอ / จังหวัด / รหัสไปรษณีย์"></textarea>
+
+    <label>วิธีชำระเงิน</label>
+    <div class="radio-group">
+      <label>
+        <input type="radio" name="payment" value="โอนผ่านธนาคาร" checked>
+        โอนผ่านธนาคาร
+      </label>
+      <label>
+        <input type="radio" name="payment" value="ชำระปลายทาง">
+        ชำระแบบปลายทาง (COD)
+      </label>
+    </div>
+
+    <!-- กล่องแสดงเลขบัญชี -->
+    <div id="bankBox" class="bank-box">
+      <strong>โอนผ่านธนาคาร</strong><br>
+      ธนาคารกสิกรไทย<br>
+      เลขบัญชี: <strong>394-2-07045-3</strong><br>
+      ชื่อบัญชี: <strong>บจก. ที เอ็ม เค (ประเทศไทย)</strong>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-secondary" onclick="backToStep1()">ย้อนกลับ</button>
+      <button class="btn-primary" onclick="submitOrder()">ยืนยันสั่งซื้อ</button>
+    </div>
+
+    <div id="summary" class="summary-box" style="display:none;"></div>
+
+    <button id="copyBtn" class="copy-btn btn-secondary" style="display:none;" onclick="copySummary()">คัดลอกข้อความสั่งซื้อ</button>
+    <button id="lineBtn" class="line-btn btn-primary" style="display:none;" onclick="sendToLine()">ส่งคำสั่งซื้อผ่าน LINE</button>
+
+    <div class="note">
+      *หลังยืนยันสั่งซื้อแล้ว สามารถกด “ส่งคำสั่งซื้อผ่าน LINE” เพื่อเด้งไปหน้าแชทร้าน <strong>@kokiriseaweed</strong> พร้อมข้อความออเดอร์ได้เลย
+    </div>
+  </div>
+</div>
+
+<script>
+  // ตั้งค่า LINE OA ID ที่นี่ (LINE ID จริงคือ @kokiriseaweed)
+  const LINE_OA_ID_ENCODED = '%40kokiriseaweed';
+
+  // ใช้เก็บข้อความออเดอร์ล่าสุด
+  let lastOrderText = '';
+
+  // สลับ Step
+  function goToStep2() {
+    const flavor = document.getElementById('flavor').value;
+    const quantity = document.getElementById('quantity').value;
+
+    if (!flavor || !quantity) {
+      alert('กรุณาเลือกรสชาติและจำนวนให้ครบก่อนค่ะ');
+      return;
+    }
+
+    document.getElementById('step1').classList.remove('active');
+    document.getElementById('step2').classList.add('active');
+  }
+
+  function backToStep1() {
+    document.getElementById('step2').classList.remove('active');
+    document.getElementById('step1').classList.add('active');
+  }
+
+  // แสดง/ซ่อนกล่องเลขบัญชีตามวิธีชำระ
+  const paymentRadios = document.getElementsByName('payment');
+  paymentRadios.forEach(function(radio) {
+    radio.addEventListener('change', function() {
+      const bankBox = document.getElementById('bankBox');
+      if (this.value === 'โอนผ่านธนาคาร') {
+        bankBox.style.display = 'block';
+      } else {
+        bankBox.style.display = 'none';
+      }
+    });
+  });
+
+  // ฟังก์ชันคำนวณราคา
+  function getPrice(quantity) {
+    switch (quantity) {
+      case "50 ห่อ": return 700;
+      case "100 ห่อ": return 1300;
+      case "200 ห่อ": return 2550;
+      default: return 0;
+    }
+  }
+
+  // สร้างข้อความออเดอร์
+  function buildOrderText() {
+    const flavor = document.getElementById('flavor').value;
+    const quantity = document.getElementById('quantity').value;
+    const price = getPrice(quantity);
+    const customerName = document.getElementById('customerName').value.trim();
+    const address = document.getElementById('address').value.trim();
+    const payment = document.querySelector('input[name="payment"]:checked')?.value;
+
+    if (!flavor || !quantity) {
+      alert('กรุณาเลือกรสชาติและจำนวนให้ครบก่อนค่ะ');
+      return null;
+    }
+    if (!customerName || !address) {
+      alert('กรุณากรอกชื่อผู้รับและที่อยู่จัดส่งให้ครบถ้วนค่ะ');
+      return null;
+    }
+
+    let text = '';
+    text += 'คำสั่งซื้อสินค้า\n';
+    text += '-------------------------\n';
+    text += 'สินค้า: สินค้ารูปที่ 1\n'; // เปลี่ยนเป็นชื่อสินค้าจริงได้
+    text += 'รสชาติ: ' + flavor + '\n';
+    text += 'จำนวน: ' + quantity + '\n';
+    text += 'ราคา: ' + price.toLocaleString() + ' บาท\n\n';
+    text += 'ชื่อผู้รับ: ' + customerName + '\n';
+    text += 'ที่อยู่จัดส่ง:\n' + address + '\n\n';
+    text += 'วิธีชำระเงิน: ' + payment + '\n';
+
+    if (payment === 'โอนผ่านธนาคาร') {
+      text += '\nโอนเข้าบัญชี:\n';
+      text += 'ธนาคารกสิกรไทย\n';
+      text += 'เลขบัญชี 394-2-07045-3\n';
+      text += 'บจก. ที เอ็ม เค (ประเทศไทย)\n';
+    }
+
+    return text;
+  }
+
+  function submitOrder() {
+    const text = buildOrderText();
+    if (!text) return;
+
+    lastOrderText = text;
+
+    const summaryDiv = document.getElementById('summary');
+    summaryDiv.textContent = text;
+    summaryDiv.style.display = 'block';
+
+    document.getElementById('copyBtn').style.display = 'block';
+    document.getElementById('lineBtn').style.display = 'block';
+  }
+
+  function copySummary() {
+    if (!lastOrderText) {
+      alert('กรุณากดยืนยันสั่งซื้อก่อนค่ะ');
+      return;
+    }
+
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(lastOrderText)
+        .then(function() {
+          alert('คัดลอกข้อความเรียบร้อยแล้วค่ะ');
+        })
+        .catch(function() {
+          alert('ไม่สามารถคัดลอกอัตโนมัติได้ กรุณาเลือกข้อความแล้วคัดลอกด้วยตัวเอง');
+        });
+    } else {
+      alert('เบราว์เซอร์นี้ไม่รองรับการคัดลอกอัตโนมัติ กรุณาเลือกข้อความแล้วคัดลอกด้วยตัวเอง');
+    }
+  }
+
+  function sendToLine() {
+    // ถ้ายังไม่มีข้อความ ให้สร้างก่อน
+    if (!lastOrderText) {
+      const text = buildOrderText();
+      if (!text) return;
+      lastOrderText = text;
+    }
+
+    const encodedText = encodeURIComponent(lastOrderText);
+    const url = 'https://line.me/R/oaMessage/' + LINE_OA_ID_ENCODED + '/?' + encodedText;
+    window.location.href = url;
+  }
+</script>
+
+</body>
+</html>
+
